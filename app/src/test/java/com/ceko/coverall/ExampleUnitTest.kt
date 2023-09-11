@@ -14,4 +14,42 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+
+
+    @Test
+    fun testMockMethodWithInput1() {
+        // Arrange
+        val coverallClass = CoverallClass()
+
+        // Act
+        val result = coverallClass.mockMethod(1)
+
+        // Assert
+        assertEquals("A", result)
+    }
+
+    @Test
+    fun testMockMethodWithInput2() {
+        // Arrange
+        val coverallClass = CoverallClass()
+
+        // Act
+        val result = coverallClass.mockMethod(2)
+
+        // Assert
+        assertEquals("B", result)
+    }
+
+    @Test
+    fun testMockMethodWithInputOther() {
+        // Arrange
+        val coverallClass = CoverallClass()
+
+        // Act
+        val result = coverallClass.mockMethod(3)
+
+        // Assert
+        assertEquals("C", result)
+    }
 }
