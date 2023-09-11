@@ -1,5 +1,6 @@
-package com.ceko.coverall
+package com.CovTest.tst
 
+import com.CovTest.tst.ui.CoverallClass
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -14,9 +15,6 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
-
-
-
     @Test
     fun testMockMethodWithInput1() {
         // Arrange

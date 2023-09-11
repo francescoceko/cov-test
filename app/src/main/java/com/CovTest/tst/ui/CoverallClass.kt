@@ -1,4 +1,4 @@
-package com.ceko.coverall
+package com.CovTest.tst.ui
 
 class CoverallClass {
 
