@@ -12,8 +12,15 @@ jacoco {
 }
 
 coveralls {
-    jacocoReportPath 'build/coverage-report.xml'
+    sourceDirs += ['app/src/main/java']
+    jacocoReportPath "${buildDir}/coverage-report"
 }
+
+//coverallsJacoco {
+//    // println("sadfa $sourceSets ")
+//    reportSourceSets += files("/app/src/main/java")
+//    reportPath "${buildDir}/coverage-report"
+//}
 
 project.afterEvaluate {
     if (isAndroidModule(project)) {
@@ -30,7 +37,7 @@ def setupKotlinReporting() {
             csv.enabled false
             xml {
                 enabled true
-                destination file("${buildDir}/coverage-report")
+                destination file("${buildDir}/coverage-report.xml")
             }
             html {
                 enabled true
@@ -41,29 +48,32 @@ def setupKotlinReporting() {
 }
 
 def setupAndroidReporting() {
-    def variantName = 'staging'
-    def taskName = 'testStagingUnitTest'
+    def variantName = 'debug'
+    def taskName = 'testDebugUnitTest'
 
     tasks.withType(Test).configureEach {
         jacoco.includeNoLocationClasses true
         jacoco.excludes = ['jdk.internal.*']
     }
-//    task jacocoTestReport(
-//            type: JacocoReport,
-//            dependsOn: [taskName]
-//    ) {
-    tasks.register("jacocoTestReport", JacocoReport) {
-        dependsOn tasks.named(taskName)
+    task jacocoTestReport(
+            type: JacocoReport,
+            dependsOn: [taskName]
+    ) {
+//    tasks.register("jacocoTestReport", JacocoReport) {
+//        dependsOn tasks.named(taskName)
         reports {
-            csv.enabled false
-            xml {
+            csv {
                 enabled true
+            }
+            xml {
+                setEnabled(true)
                 destination file("${buildDir}/coverage-report")
             }
             html {
                 enabled true
-                destination file("${buildDir}/coverage-report-html")
+                destination file("${buildDir}/coverage-report-html5")
             }
+
         }
         // Change as needed
         def fileFilter = [
