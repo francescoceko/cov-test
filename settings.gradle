@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "cv"
 include ':app'
+include ':mylibrary1'
+include ':nested:mylibrary2'
