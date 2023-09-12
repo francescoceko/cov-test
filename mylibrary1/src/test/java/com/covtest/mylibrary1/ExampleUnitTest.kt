@@ -15,16 +15,16 @@ class ExampleUnitTest {
         assertEquals(4, 2 + 2)
     }
 
-//    private val coverallClass = Library1Foo()
-//
-//    @Test
-//    fun testMockMethodWithInput1() {
-//        // Act
-//        val result = coverallClass.exampleMethod(1)
-//
-//        // Assert
-//        assertEquals("A", result)
-//    }
+    private val coverallClass = Library1Foo()
+
+    @Test
+    fun testMockMethodWithInput1() {
+        // Act
+        val result = coverallClass.exampleMethod(1)
+
+        // Assert
+        assertEquals("A", result)
+    }
 //
 //    @Test
 //    fun testMockMethodWithInput2() {
