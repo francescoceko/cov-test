@@ -12,15 +12,8 @@ jacoco {
 }
 
 coveralls {
-    sourceDirs += ['app/src/main/java']
-    jacocoReportPath "${buildDir}/coverage-report"
+    sourceDirs += ["/${projectDir}/src/main/java"]
 }
-
-//coverallsJacoco {
-//    // println("sadfa $sourceSets ")
-//    reportSourceSets += files("/app/src/main/java")
-//    reportPath "${buildDir}/coverage-report"
-//}
 
 project.afterEvaluate {
     if (isAndroidModule(project)) {
@@ -55,23 +48,20 @@ def setupAndroidReporting() {
         jacoco.includeNoLocationClasses true
         jacoco.excludes = ['jdk.internal.*']
     }
-    task jacocoTestReport(
-            type: JacocoReport,
-            dependsOn: [taskName]
-    ) {
-//    tasks.register("jacocoTestReport", JacocoReport) {
-//        dependsOn tasks.named(taskName)
+
+    tasks.register("jacocoTestReport", JacocoReport) {
+        dependsOn tasks.named(taskName)
         reports {
             csv {
-                enabled true
+                enabled = false
             }
             xml {
-                setEnabled(true)
-                destination file("${buildDir}/coverage-report")
+                enabled = true
+                destination file("${buildDir}/coverage-report.xml")
             }
             html {
-                enabled true
-                destination file("${buildDir}/coverage-report-html5")
+                enabled = true
+                destination file("${buildDir}/coverage-report-html")
             }
 
         }
@@ -79,6 +69,7 @@ def setupAndroidReporting() {
         def fileFilter = [
                 '**/*Application.*',
                 '**/*Activity.*',
+                '**/*ActivityKt.*',
                 '**/*Fragment.*',
                 '**/*JsonAdapter.*',
                 '**/di/**',
@@ -141,9 +132,7 @@ def setupAndroidReporting() {
         executionData.from = fileTree(
                 dir: project.buildDir,
                 includes: [
-                        // 'jacoco/testStagingUnitTest.exec',
                         "outputs/unit_test_code_coverage/${variantName}UnitTest/${taskName}.exec",
-                        // 'outputs/code-coverage/connected/*coverage.ec'
                 ]
         )
     }

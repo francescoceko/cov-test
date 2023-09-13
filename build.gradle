@@ -10,8 +10,9 @@ buildscript {
 plugins {
     id 'com.android.application' version '7.4.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.8.10' apply false
-     id 'com.github.kt3k.coveralls' version '2.12.2' apply true
+    id 'com.github.kt3k.coveralls' version '2.12.2' apply true
     id 'com.android.library' version '7.4.1' apply false
+    id 'jacoco'
     // id 'com.github.nbaztec.coveralls-jacoco' version '1.2.16' apply true
 }
 
@@ -19,5 +20,42 @@ subprojects {
     if(project.subprojects.size() == 0){
         apply from: "$project.rootDir/jacoco.gradle"
     }
-
 }
+
+coveralls {
+    println("pr 2 $path -> ${subprojects.projectDir.flatten()}")
+    jacocoReportPath "${buildDir}/reports/jacoco/xml/report.xml"
+}
+
+tasks.register('jacocoFullReport', JacocoReport) {
+    group = 'Verification'
+    description = 'Generate Jacoco aggregate report for all modules'
+
+    def projects = subprojects.findAll { it.getTasksByName("jacocoTestReport", false) }
+
+    dependsOn(projects.jacocoTestReport)
+
+    final source = files(projects.jacocoTestReport.sourceDirectories)
+
+    files(projects.jacocoTestReport.classDirectories).forEach {
+        println("source dirs $it")
+    }
+
+    additionalSourceDirs.setFrom source
+    sourceDirectories.setFrom source
+
+    classDirectories.setFrom files(projects.jacocoTestReport.classDirectories)
+    executionData.setFrom files(projects.jacocoTestReport.executionData).findAll { it.exists() }
+
+    reports {
+        html {
+            enabled = true
+            destination file("${buildDir}/reports/jacoco/html")
+        }
+        xml {
+            enabled = true
+            destination file("${buildDir}/reports/jacoco/xml/report.xml")
+        }
+    }
+}
+
