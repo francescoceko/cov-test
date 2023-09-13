@@ -1,8 +1,7 @@
 package com.covtest.mylibrary1
 
-import org.junit.Test
-
 import org.junit.Assert.*
+import org.junit.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -25,25 +24,24 @@ class ExampleUnitTest {
         // Assert
         assertEquals("A", result)
     }
-//
-//    @Test
-//    fun testMockMethodWithInput2() {
-//        // Arrange
-//
-//        // Act
-//        val result = coverallClass.exampleMethod(2)
-//
-//        // Assert
-//        assertEquals("B", result)
-//    }
-//
-//    @Test
-//    fun testMockMethodWithInputOther() {
-//
-//        // Act
-//        val result = coverallClass.exampleMethod(3)
-//
-//        // Assert
-//        assertEquals("C", result)
-//    }
+
+    @Test
+    fun testMockMethodWithInput2() {
+        // Arrange
+
+        // Act
+        val result = coverallClass.exampleMethod(2)
+
+        // Assert
+        assertEquals("B", result)
+    }
+
+    @Test
+    fun testMockMethodWithInputOther() {
+        // Act
+        val result = coverallClass.exampleMethod(3)
+
+        // Assert
+        assertEquals("C", result)
+    }
 }
